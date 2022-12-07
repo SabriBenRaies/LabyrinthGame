@@ -9,28 +9,26 @@ import javax.swing.JPanel;
 
 import com.moss.personange.Hero;
 
+import tile.TileManager;
+
 public class PanneauJeu extends JPanel implements Runnable {
 	// Variables et Constantes
 	final int originalTileSize = 16;
 	final int scale = 3;
 
 	public final int tileSize = originalTileSize * scale;
-	final int maxScreenCol = 16;
-	final int maxScreenLigne = 12;
-	final int screenLargeur = tileSize * maxScreenCol;
-	final int screenHauteur = tileSize * maxScreenLigne;
+	public final int maxScreenCol = 16;
+	public final int maxScreenLigne = 12;
+	public final int screenLargeur = tileSize * maxScreenCol;
+	public final int screenHauteur = tileSize * maxScreenLigne;
 
 	// FPS
 	int FPS = 60;
 
+	TileManager tileM = new TileManager(this);
 	Clavier clavier = new Clavier();
 	Thread gameThread;
 	Hero hero = new Hero(this, clavier);
-
-	// positons par defaut du joueur
-	int heroX = 100;
-	int heroY = 100;
-	int speedHero = 4;
 
 	public PanneauJeu() {
 		this.setPreferredSize(new Dimension(screenLargeur, screenHauteur));
@@ -52,6 +50,7 @@ public class PanneauJeu extends JPanel implements Runnable {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2 = (Graphics2D) g;
+		tileM.draw(g2);
 		hero.draw(g2);
 		g2.dispose();
 	}
